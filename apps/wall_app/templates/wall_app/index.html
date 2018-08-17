@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home Page</title>
+</head>
+<body>
+    <h1>Add a Message</h1>
+    <form action="/post_message" method="POST">
+    {% csrf_token %}
+    <p>Your Name: <input type="text" name="user"></p>
+    <p>Message Text: <input type="text" name="text"></p>
+    <input type="submit" value="Post Message">
+    </form>
+    {% for message in messages %}
+        <p>{{message.text}}</p>
+        <p>{{message.user_name}}</p>
+        <a href="toEdit/{{message.id}}">Edit</a> | <a href="delete/{{message.id}}">Delete</a>
+        {% for comment in message.message_comment.all %}
+            <div style="background-color: {{comment.color}}">
+            <p>{{comment.text}}</p>
+            <a>Edit</a> | <a>Delete</a>
+            </div>
+        {% endfor %}
+        <form action="/post_comment" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="messageId" value="{{message.id}}">
+            <p>Message Text: <input type="text" name="text"></p>
+            <p>Your Name: <input type="text" name="user"></p>
+            <p>Background color: <input type="text" name="color"></p>
+            <input type="submit" value="Post Comment">
+            </form>
+    {% endfor %}
+</body>
+</html>

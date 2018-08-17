@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form action="editPost/{{message.id}}" method="POST">
+        {% csrf_token %}
+        <p>Message Text: <input type="text" name="text" value="{{message.text}}"></p>
+        <p>Your Name: <input type="text" name="user" value="{{message.user_name}}"></p>
+        <input type="submit" value="Edit Message">
+    </form>
+</body>
+</html>
